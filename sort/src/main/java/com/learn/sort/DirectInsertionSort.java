@@ -1,19 +1,19 @@
 package com.learn.sort;
 
+import com.learn.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * 直接插入排序，希尔排序，简单选择排序，堆排序，冒泡排序，快速排序，归并排序，基数排序
+ * 直接插入排序，希尔排序，简单选择排序，冒泡排序，归并排序，基数排序
  * Created by hechao on 2017/6/12.
  */
 public class DirectInsertionSort {
     public static void main(String[] args) {
 //        simpleSelectionSort();
-//        new HeapSort();
 //        bubbleSort();
-//        new QuickSort();
 //        new MergingSort();
         new RadixSort();
         return;
@@ -91,73 +91,6 @@ public class DirectInsertionSort {
     }
 
     /**
-     * 堆排序
-     */
-    public static class HeapSort {
-
-        int a[] = {49, 38, 65, 97, 76, 13, 27, 49, 78, 34, 12, 64, 5, 4, 62, 99, 98, 54, 56, 17, 18, 23, 34, 15, 35, 25, 53, 51};
-
-        public HeapSort() {
-            heapSort(a);
-        }
-
-        public void heapSort(int[] a) {
-            System.out.println("开始排序");
-            int arrayLength = a.length;
-            //循环建堆
-            for (int i = 0; i < arrayLength - 1; i++) {
-                //建堆
-                buildMaxHeap(a, arrayLength - 1 - i);
-                //交换堆顶和最后一个元素
-                swap(a, 0, arrayLength - 1 - i);
-                System.out.println(Arrays.toString(a));
-            }
-        }
-
-
-        private void swap(int[] data, int i, int j) {
-            // TODO Auto-generated method stub
-            int tmp = data[i];
-            data[i] = data[j];
-            data[j] = tmp;
-        }
-
-        //对data数组从0到lastIndex建大顶堆
-        private void buildMaxHeap(int[] data, int lastIndex) {
-            // TODO Auto-generated method stub
-            //从lastIndex处节点（最后一个节点）的父节点开始
-
-            for (int i = (lastIndex - 1) / 2; i >= 0; i--) {
-                //k保存正在判断的节点
-                int k = i;
-                //如果当前k节点的子节点存在
-                while (k * 2 + 1 <= lastIndex) {
-                        //k节点的左子节点的索引
-                        int biggerIndex = 2 * k + 1;
-                        //如果biggerIndex小于lastIndex，即biggerIndex+1代表的k节点的右子节点存在
-                        if (biggerIndex < lastIndex) {
-                                //若果右子节点的值较大
-                                if (data[biggerIndex] < data[biggerIndex + 1]) {
-                                    //biggerIndex总是记录较大子节点的索引
-                                biggerIndex++;
-                            }
-                        }
-
-                    //如果k节点的值小于其较大的子节点的值
-                    if (data[k] < data[biggerIndex]) {
-                        //交换他们
-                        swap(data, k, biggerIndex);
-                        //将biggerIndex赋予k，开始while循环的下一次循环，重新保证k节点的值大于其左右子节点的值
-                        k = biggerIndex;
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * 冒泡排序
      */
     public static void bubbleSort() {
@@ -176,50 +109,6 @@ public class DirectInsertionSort {
     }
 
 
-    /**
-     * 快速排序
-     */
-    public static class QuickSort {
-        int a[] = {49, 38, 65, 97, 76, 13, 27, 49, 78, 34, 12, 64, 5, 4, 62, 99, 98, 54, 56, 17, 18, 23, 34, 15, 35, 25, 53, 51};
-
-        public QuickSort() {
-            quick(a);
-            System.out.println(Arrays.toString(a));
-
-        }
-
-        public int getMiddle(int[] list, int low, int high) {
-            int tmp = list[low];    //数组的第一个作为中轴
-            while (low < high) {
-                while (low < high && list[high] >= tmp) {
-                    high--;
-                }
-
-                list[low] = list[high];   //比中轴小的记录移到低端
-                while (low < high && list[low] <= tmp) {
-                    low++;
-                }
-
-                list[high] = list[low];   //比中轴大的记录移到高端
-            }
-            list[low] = tmp;              //中轴记录到尾
-            return low;                   //返回中轴的位置
-        }
-
-        public void _quickSort(int[] list, int low, int high) {
-            if (low < high) {
-                int middle = getMiddle(list, low, high);  //将list数组进行一分为二
-                _quickSort(list, low, middle - 1);       //对低字表进行递归排序
-                _quickSort(list, middle + 1, high);       //对高字表进行递归排序
-            }
-        }
-
-        public void quick(int[] a2) {
-            if (a2.length > 0) {    //查看数组是否为空
-                _quickSort(a2, 0, a2.length - 1);
-            }
-        }
-    }
 
     /**
      * 归并排序
